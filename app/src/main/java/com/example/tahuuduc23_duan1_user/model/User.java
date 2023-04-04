@@ -115,36 +115,36 @@ public class User implements Serializable {
         this.name = name;
     }
 
-//    public Map<String, Object> toMap() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("username", username);
-//        map.put("password", password);
-//        map.put("enable", enable);
-//        map.put("phone_number", phone_number);
-//        return map;
-//    }
-//
-//    public Map<String, Object> editUser() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("password", password);
-//        map.put("name", name);
-//        return map;
-//    }
-//
-//    public Map<String, Object> editAdress() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("address", address);
-//        return map;
-//    }
-//
-//    public Map<String, Object> toMapThongTinGiaoHang() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("phone_number", phone_number);
-//        map.put("address", address);
-//        map.put("name", name);
-//        return map;
-//    }
-//
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("username", username);
+        map.put("password", password);
+        map.put("enable", enable);
+        map.put("phone_number", phone_number);
+        return map;
+    }
+
+    public Map<String, Object> editUser() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("password", password);
+        map.put("name", name);
+        return map;
+    }
+
+    public Map<String, Object> editAdress() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("address", address);
+        return map;
+    }
+
+    public Map<String, Object> toMapThongTinGiaoHang() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("phone_number", phone_number);
+        map.put("address", address);
+        map.put("name", name);
+        return map;
+    }
+
 //    public Map<String, Object> toMapSPDaThich() {
 //        HashMap<String, Object> map = new HashMap<String, Object>();
 //        map.put("ma_sp_da_thich", ma_sp_da_thich);
@@ -156,11 +156,11 @@ public class User implements Serializable {
 //        map.put("gio_hang", gio_hang);
 //        return map;
 //    }
-//
-//    public Map<String, Object> toMapAvatar() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("hinhanh", hinhanh);
-//        return map;
-//    }
+
+    public Map<String, Object> toMapAvatar() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("hinhanh", hinhanh);
+        return map;
+    }
 
 }

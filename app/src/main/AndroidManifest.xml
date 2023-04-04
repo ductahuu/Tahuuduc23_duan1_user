@@ -24,6 +24,12 @@
             android:exported="false"/>
         <activity android:name=".activity.HomeActivity"
             android:exported="false"/>
+        <activity android:name=".activity.SearchActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.ProductActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.ShowProductActivity"
+            android:exported="false"/>
 
     </application>
 

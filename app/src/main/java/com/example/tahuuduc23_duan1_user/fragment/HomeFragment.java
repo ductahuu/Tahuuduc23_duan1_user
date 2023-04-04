@@ -1,6 +1,218 @@
 package com.example.tahuuduc23_duan1_user.fragment;
 
-import androidx.fragment.app.Fragment;
+import static com.example.tahuuduc23_duan1_user.activity.FlashActivity.userLogin;
+import static com.example.tahuuduc23_duan1_user.ultis.OverUtils.ERROR_MESSAGE;
 
-public class HomeFragment extends Fragment {
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.tahuuduc23_duan1_user.R;
+import com.example.tahuuduc23_duan1_user.activity.ProductActivity;
+import com.example.tahuuduc23_duan1_user.activity.SearchActivity;
+import com.example.tahuuduc23_duan1_user.activity.ShowProductActivity;
+import com.example.tahuuduc23_duan1_user.adapter.CategoryAdapter;
+import com.example.tahuuduc23_duan1_user.adapter.HorizontalProductAdapter;
+import com.example.tahuuduc23_duan1_user.dao.ProductDao;
+import com.example.tahuuduc23_duan1_user.dao.ProductTypeDao;
+import com.example.tahuuduc23_duan1_user.interface_.IAfterGetAllObject;
+import com.example.tahuuduc23_duan1_user.interface_.OnAddToCard;
+import com.example.tahuuduc23_duan1_user.interface_.OnClickItem;
+import com.example.tahuuduc23_duan1_user.interface_.UpdateRecyclerView;
+import com.example.tahuuduc23_duan1_user.model.LoaiSP;
+import com.example.tahuuduc23_duan1_user.model.Product;
+import com.example.tahuuduc23_duan1_user.ultis.OverUtils;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeFragment extends Fragment implements UpdateRecyclerView, OnClickItem, OnAddToCard {
+    private RecyclerView recyclerViewCategoryList;
+
+    private CategoryAdapter categoryAdapter;
+    private List<LoaiSP> loaiSPList;
+    private TextView tvTenNguoiDung;
+    private TextView tvTimKiem;
+
+    private RecyclerView recyclerViewPopular;
+    private List<Product> popularProductList;
+    private HorizontalProductAdapter popularProductAdapter;
+
+    private ImageView imgSanPhamKhuyenMais;
+    private RecyclerView rcvSanPhamKhuyenMai;
+    private List<Product> khuyenMaiProductList;
+    private HorizontalProductAdapter khuyenMaiAdapter;
+
+    private ImageView imgMoiNhat;
+    private RecyclerView rcvSanPhamMoiNhat;
+    private List<Product> moiNhatProductList;
+    private HorizontalProductAdapter moiNhatAdapter;
+
+
+    View view;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home,container,false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        setUpTvHoTen();
+        setUpTvTimKiem();
+        recyclerViewCategory();
+        setUpRcvPhoBien();
+        setUpRcvKhuyenMai();
+        setUpRcvMoiNhat();
+    }
+
+    private void setUpRcvKhuyenMai() {
+        khuyenMaiProductList = new ArrayList<>();
+        khuyenMaiAdapter =
+                new HorizontalProductAdapter(khuyenMaiProductList, this, this, OverUtils.TYPE_KHUYEN_MAI_ADAPTER);
+        rcvSanPhamKhuyenMai.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rcvSanPhamKhuyenMai.setAdapter(khuyenMaiAdapter);
+
+        ProductDao.getInstance().getSanPhamKhuyenMai(10, new IAfterGetAllObject() {
+            @Override
+            public void iAfterGetAllObject(Object obj) {
+                khuyenMaiProductList = (List<Product>) obj;
+                khuyenMaiAdapter.setData(khuyenMaiProductList);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                OverUtils.makeToast(getContext(), ERROR_MESSAGE);
+
+            }
+        });
+    }
+    private void setUpRcvPhoBien() {
+        popularProductList = new ArrayList<>();
+        popularProductAdapter =
+                new HorizontalProductAdapter(popularProductList, this, this, OverUtils.TYPE_PHO_BIEN_ADAPTER);
+        recyclerViewPopular.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewPopular.setAdapter(popularProductAdapter);
+
+        ProductDao.getInstance().getSanPhamPhoBien(10, new IAfterGetAllObject() {
+            @Override
+            public void iAfterGetAllObject(Object obj) {
+                popularProductList = (List<Product>) obj;
+                popularProductAdapter.setData(popularProductList);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                OverUtils.makeToast(getContext(), ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private void setUpTvHoTen() {
+        String hoTen = userLogin.getName();
+        if (hoTen != null){
+            tvTenNguoiDung.setText("Hi " + hoTen);
+        }else {
+            String userName = userLogin.getUsername();
+            tvTenNguoiDung.setText("Hi "+ userName);
+        }
+    }
+
+    private void setUpTvTimKiem() {
+        tvTimKiem.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SearchActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void recyclerViewCategory() {
+        recyclerViewCategoryList = view.findViewById(R.id.recyclerViewCategoryList);
+        recyclerViewCategoryList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        loaiSPList = new ArrayList<>();
+        categoryAdapter = new CategoryAdapter(getContext(), loaiSPList, this);
+        recyclerViewCategoryList.setAdapter(categoryAdapter);
+        ProductTypeDao.getInstance().getAllProductType(new IAfterGetAllObject() {
+            @Override
+            public void iAfterGetAllObject(Object obj) {
+                loaiSPList = (List<LoaiSP>) obj;
+                categoryAdapter.setData(loaiSPList);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                OverUtils.makeToast(getContext(), ERROR_MESSAGE);
+            }
+        });
+        categoryAdapter.setData(loaiSPList);
+    }
+
+
+    private void setUpRcvMoiNhat() {
+        moiNhatProductList = new ArrayList<>();
+        moiNhatAdapter = new HorizontalProductAdapter(moiNhatProductList, this, this, OverUtils.TYPE_SP_MOI_ADAPTER);
+        rcvSanPhamMoiNhat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rcvSanPhamMoiNhat.setAdapter(moiNhatAdapter);
+        ProductDao.getInstance().getSanPhamMoi(10, new IAfterGetAllObject() {
+            @Override
+            public void iAfterGetAllObject(Object obj) {
+                moiNhatProductList = (List<Product>) obj;
+                moiNhatAdapter.setData(moiNhatProductList);
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                OverUtils.makeToast(getContext(), ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private void initView(View view) {
+        tvTenNguoiDung = view.findViewById(R.id.tvTenNguoiDung);
+        tvTimKiem = view.findViewById(R.id.tvTimKiem);
+        recyclerViewPopular = view.findViewById(R.id.recyclerViewPopular);
+        imgSanPhamKhuyenMais = view.findViewById(R.id.imgSanPhamKhuyenMais);
+        rcvSanPhamKhuyenMai = view.findViewById(R.id.rcvSanPhamKhuyenMai);
+        imgMoiNhat = view.findViewById(R.id.imgMoiNhat);
+        rcvSanPhamMoiNhat = view.findViewById(R.id.rcvSanPhamMoiNhat);
+    }
+
+    @Override
+    public void onAddToCard(Product product) {
+
+    }
+
+    @Override
+    public void onClickItem(Object obj) {
+        String productId = (String) obj;
+        Intent intent = new Intent(getContext(), ShowProductActivity.class);
+        intent.putExtra("productId",productId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteItem(Object obj) {
+
+    }
+
+    @Override
+    public void callback(String categoryId) {
+        Intent intent = new Intent(getContext(), ProductActivity.class);
+        intent.putExtra("categoryId",categoryId);
+        startActivity(intent);
+    }
 }

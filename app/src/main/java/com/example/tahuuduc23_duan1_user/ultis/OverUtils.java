@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.tahuuduc23_duan1_user.activity.FlashActivity;
 import com.example.tahuuduc23_duan1_user.local_database.LocalUserDatabase;
+import com.example.tahuuduc23_duan1_user.model.Product;
 import com.example.tahuuduc23_duan1_user.model.User;
 
 import java.text.NumberFormat;
@@ -83,37 +84,37 @@ public class OverUtils {
         List<User> userList = LocalUserDatabase.getInstance(context).getUserDao().getAll();
         return userList.get(0);
     }
-//
-//    //san pham khuyen mai
-//    public static List<Product> filterProduct(List<Product> products) {
-//        List<Product> result = new ArrayList<>();
-//        for(Product product : products) {
-//            if(product.getTrang_thai().equals(HOAT_DONG)) {
-//                result.add(product);
-//            }
-//        }
-//        return result;
-//    }
-//
-//    //hien thi san pham moi
-//    public static List<Product> filterProduct2(List<Product> products) {
-//        List<Product> result = new ArrayList<>();
-//        for(Product product : products) {
-//            if(product.getTrang_thai().equals(HOAT_DONG) || product.getTrang_thai().equals(SAP_RA_MAT)) {
-//                result.add(product);
-//            }
-//        }
-//        return result;
-//    }
-//
-//    //hien thi san pham pho bien
-//    public static List<Product> filterProduct3(List<Product> products) {
-//        List<Product> result = new ArrayList<>();
-//        for(Product product : products) {
-//            if(product.getTrang_thai().equals(HOAT_DONG) || product.getTrang_thai().equals(SAP_RA_MAT)) {
-//                result.add(product);
-//            }
-//        }
-//        return result;
-//    }
+
+    //san pham khuyen mai
+    public static List<Product> filterProduct(List<Product> products) {
+        List<Product> result = new ArrayList<>();
+        for(Product product : products) {
+            if(product.getTrang_thai().equals(HOAT_DONG)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
+    //hien thi san pham moi
+    public static List<Product> filterProduct2(List<Product> products) {
+        List<Product> result = new ArrayList<>();
+        for(Product product : products) {
+            if(product.getTrang_thai().equals(HOAT_DONG) || product.getTrang_thai().equals(SAP_RA_MAT)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
+    //hien thi san pham pho bien
+    public static List<Product> filterProduct3(List<Product> products) {
+        List<Product> result = new ArrayList<>();
+        for(Product product : products) {
+            if(product.getTrang_thai().equals(HOAT_DONG) || product.getTrang_thai().equals(SAP_RA_MAT)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
 }
