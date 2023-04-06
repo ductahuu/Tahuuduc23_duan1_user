@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterGetAllObject;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterInsertObject;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterUpdateObject;
+import com.example.tahuuduc23_duan1_user.model.DonHang;
 import com.example.tahuuduc23_duan1_user.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -100,29 +101,29 @@ public class UserDao {
                 });
     }
 
-//    public void getDonHangByUser(User user, IAfterGetAllObject iAfterGetAllObject) {
-//        Query query = FirebaseDatabase.getInstance().getReference().child("don_hang")
-//                .orderByChild("user_id").equalTo(user.getUsername());
-//        query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                List<DonHang> donHangList = new ArrayList<>();
-//                for (DataSnapshot data : snapshot.getChildren()) {
-//                    DonHang donHang = data.getValue(DonHang.class);
-//                    if (donHang != null) {
-//                        donHangList.add(donHang);
-//                    }
-//                }
-//                iAfterGetAllObject.iAfterGetAllObject(donHangList);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                iAfterGetAllObject.onError(error);
-//            }
-//        });
-//
-//    }
+    public void getDonHangByUser(User user, IAfterGetAllObject iAfterGetAllObject) {
+        Query query = FirebaseDatabase.getInstance().getReference().child("don_hang")
+                .orderByChild("user_id").equalTo(user.getUsername());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<DonHang> donHangList = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    DonHang donHang = data.getValue(DonHang.class);
+                    if (donHang != null) {
+                        donHangList.add(donHang);
+                    }
+                }
+                iAfterGetAllObject.iAfterGetAllObject(donHangList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                iAfterGetAllObject.onError(error);
+            }
+        });
+
+    }
 
 
 

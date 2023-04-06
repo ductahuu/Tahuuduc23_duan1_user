@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import com.example.tahuuduc23_duan1_user.model.User;
 
 @Database(entities = {User.class},version = 1)
-//@TypeConverters({StringTypeConverter.class,GioHangTypeConverter.class})
+@TypeConverters({StringTypeConverter.class,GioHangTypeConverter.class})
 public abstract class LocalUserDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "user.db";
 

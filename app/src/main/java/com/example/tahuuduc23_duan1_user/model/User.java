@@ -20,8 +20,8 @@ public class User implements Serializable {
     private String phone_number;
     private boolean enable;
     private String hinhanh;
-//    private List<String> ma_sp_da_thich;
-//    private List<GioHang> gio_hang;
+    private List<String> ma_sp_da_thich;
+    private List<GioHang> gio_hang;
     private String address;
     private String name;
 
@@ -83,21 +83,21 @@ public class User implements Serializable {
         this.hinhanh = hinhanh;
     }
 
-//    public List<String> getMa_sp_da_thich() {
-//        return ma_sp_da_thich;
-//    }
-//
-//    public void setMa_sp_da_thich(List<String> ma_sp_da_thich) {
-//        this.ma_sp_da_thich = ma_sp_da_thich;
-//    }
-//
-//    public List<GioHang> getGio_hang() {
-//        return gio_hang;
-//    }
-//
-//    public void setGio_hang(List<GioHang> gio_hang) {
-//        this.gio_hang = gio_hang;
-//    }
+    public List<String> getMa_sp_da_thich() {
+        return ma_sp_da_thich;
+    }
+
+    public void setMa_sp_da_thich(List<String> ma_sp_da_thich) {
+        this.ma_sp_da_thich = ma_sp_da_thich;
+    }
+
+    public List<GioHang> getGio_hang() {
+        return gio_hang;
+    }
+
+    public void setGio_hang(List<GioHang> gio_hang) {
+        this.gio_hang = gio_hang;
+    }
 
     public String getAddress() {
         return address;
@@ -145,17 +145,17 @@ public class User implements Serializable {
         return map;
     }
 
-//    public Map<String, Object> toMapSPDaThich() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("ma_sp_da_thich", ma_sp_da_thich);
-//        return map;
-//    }
-//
-//    public Map<String, Object> toMapGioHang() {
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("gio_hang", gio_hang);
-//        return map;
-//    }
+    public Map<String, Object> toMapSPDaThich() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("ma_sp_da_thich", ma_sp_da_thich);
+        return map;
+    }
+
+    public Map<String, Object> toMapGioHang() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("gio_hang", gio_hang);
+        return map;
+    }
 
     public Map<String, Object> toMapAvatar() {
         HashMap<String, Object> map = new HashMap<String, Object>();
