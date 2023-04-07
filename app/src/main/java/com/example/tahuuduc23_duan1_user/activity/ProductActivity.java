@@ -94,8 +94,6 @@ public class ProductActivity extends AppCompatActivity implements UpdateRecycler
         });
     }
 
-
-
     public void btnReturn(View view){
         onBackPressed();
     }

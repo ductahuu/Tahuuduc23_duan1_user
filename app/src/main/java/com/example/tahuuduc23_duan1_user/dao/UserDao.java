@@ -8,7 +8,10 @@ import com.example.tahuuduc23_duan1_user.interface_.IAfterGetAllObject;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterInsertObject;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterUpdateObject;
 import com.example.tahuuduc23_duan1_user.model.DonHang;
+import com.example.tahuuduc23_duan1_user.model.GioHang;
 import com.example.tahuuduc23_duan1_user.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -123,6 +126,28 @@ public class UserDao {
             }
         });
 
+    }
+
+    public void getGioHangOfUser(User user, IAfterGetAllObject iAfterGetAllObject) {
+        FirebaseDatabase.getInstance().getReference().child("user").child(user.getUsername())
+                .child("gio_hang").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DataSnapshot snapshot = task.getResult();
+                            if (snapshot != null) {
+                                List<GioHang> gioHangList = new ArrayList<>();
+                                for (DataSnapshot data : snapshot.getChildren()) {
+                                    GioHang gioHang = data.getValue(GioHang.class);
+                                    gioHangList.add(gioHang);
+                                }
+                                iAfterGetAllObject.iAfterGetAllObject(gioHangList);
+                            } else {
+                                iAfterGetAllObject.onError(null);
+                            }
+                        }
+                    }
+                });
     }
 
 
