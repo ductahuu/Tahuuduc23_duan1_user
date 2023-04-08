@@ -30,6 +30,8 @@
             android:exported="false"/>
         <activity android:name=".activity.ShowProductActivity"
             android:exported="false"/>
+        <activity android:name=".activity.ThanhToanNgayActivity"
+            android:exported="false"/>
 
     </application>
 
