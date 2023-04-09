@@ -188,4 +188,21 @@ public class UserDao {
         });
     }
 
+    public void getUserByUserNameListener(String username, IAfterGetAllObject iAfterGetAllObject) {
+        FirebaseDatabase.getInstance().getReference().child("user").child(username)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user = snapshot.getValue(User.class);
+                        iAfterGetAllObject.iAfterGetAllObject(user);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        iAfterGetAllObject.onError(error);
+                    }
+                });
+    }
+
+
 }

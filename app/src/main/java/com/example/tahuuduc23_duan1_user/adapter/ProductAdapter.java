@@ -59,6 +59,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         //điều chỉnh ngôn ngữ theo từng vùng
         Locale locale = new Locale("vi","VN");
         NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
+        holder.tvPriceProduct.setText(currencyFormat.format((int) (product.getGia_ban() - product.getGia_ban() * product.getKhuyen_mai())) + " VNĐ");
+
 
         holder.tvPriceProduct.setOnClickListener(new View.OnClickListener() {
             @Override

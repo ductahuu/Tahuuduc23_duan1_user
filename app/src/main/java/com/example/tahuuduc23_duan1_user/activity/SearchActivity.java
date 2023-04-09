@@ -47,21 +47,10 @@ public class SearchActivity extends AppCompatActivity implements OnClickItem {
         setUpActionSearch();
     }
 
-    private void setUpActionSearch() {
-        searchView.requestFocus();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                filterProductAdapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterProductAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+    private void initView() {
+        btnBack = findViewById(R.id.btnBack);
+        searchView = findViewById(R.id.searchView);
+        rcvSearchedSanPham = findViewById(R.id.rcvSearchedSanPham);
     }
 
     private void setUpListProduct() {
@@ -86,6 +75,25 @@ public class SearchActivity extends AppCompatActivity implements OnClickItem {
         });
     }
 
+    private void setUpActionSearch() {
+        searchView.requestFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterProductAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterProductAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
+
+
     private void setUpBtnBack() {
         btnBack.setClickable(true);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +107,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickItem {
 
 
 
-    private void initView() {
-        btnBack = findViewById(R.id.btnBack);
-        searchView = findViewById(R.id.searchView);
-        rcvSearchedSanPham = findViewById(R.id.rcvSearchedSanPham);
-    }
+
 
 
     @Override

@@ -82,7 +82,7 @@ public class CartActivity extends AppCompatActivity implements OnClickItem, OnCh
                                         OverUtils.makeToast(CartActivity.this,"Giỏ hàng không có sản phẩm phù hợp");
                                     }else {
                                         soLuongSPPhuHop = 0;
-                                        Intent intent = new Intent(CartActivity.this,ThanhToanNgayActivity.class);
+                                        Intent intent = new Intent(CartActivity.this,ThanhToanActivity.class);
                                         startActivity(intent);
                                     }
                                 }

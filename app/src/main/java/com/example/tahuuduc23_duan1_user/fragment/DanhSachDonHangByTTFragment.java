@@ -46,6 +46,18 @@ public class DanhSachDonHangByTTFragment extends Fragment {
         setUpListDonHang();
     }
 
+    private void getDuLieu() {
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            trangThai = (TrangThai) bundle.getSerializable("trang_thai");
+        }
+    }
+
+    private void initView(View view) {
+        rcvDanhSachDonHang = view.findViewById(R.id.rcvDonHang);
+    }
+
+
     private void setUpListDonHang() {
         donHangList = new ArrayList<>();
         donHangAdapter = new DonHangAdapter(getContext(),donHangList);
@@ -67,7 +79,7 @@ public class DanhSachDonHangByTTFragment extends Fragment {
         });
     }
 
-    private List<DonHang> loc(TrangThai trangThai, List<DonHang> obj) {
+    private List<DonHang> loc(TrangThai trangThai, List<DonHang> donHangList) {
         List<DonHang> result = new ArrayList<>();
         for (DonHang donHang : donHangList){
             if (donHang.getTrang_thai().equals(trangThai.getTrangThai())){
@@ -77,16 +89,9 @@ public class DanhSachDonHangByTTFragment extends Fragment {
         return result;
     }
 
-    private void getDuLieu() {
-        Bundle bundle = getArguments();
-        if (bundle != null){
-            trangThai = (TrangThai) bundle.getSerializable("trang_thai");
-        }
-    }
 
-    private void initView(View view) {
-        rcvDanhSachDonHang = view.findViewById(R.id.rcvDonHang);
-    }
+
+
 
 
 }

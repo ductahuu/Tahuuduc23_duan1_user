@@ -118,61 +118,58 @@ public class ThanhToanNgayActivity extends AppCompatActivity {
     }
 
     private void setUpDatHang() {
-        tvDangHang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userLogin.getName() == null || userLogin.getAddress() == null){
-                    OverUtils.makeToast(ThanhToanNgayActivity.this,"Cần thêm địa chỉ");
-                    return;
-                }
-                UserDao.getInstance().getUserByUserName(userLogin.getUsername(), new IAfterGetAllObject() {
-                    @Override
-                    public void iAfterGetAllObject(Object obj) {
-                        User user = (User) obj;
-                        if (user.getUsername() != null && user.isEnable()){
-                            DonHang donHang = new DonHang();
-                            donHang.setUser_id(user.getUsername());
-                            donHang.setDia_chi(user.getAddress());
-                            donHang.setHo_ten(user.getName());
-                            donHang.setDon_hang_chi_tiets(donHangChiTietList);
-                            if (ghiChu != null){
-                                donHang.setGhi_chu(ghiChu);
-                            }
-                            donHang.setSdt(user.getPhone_number());
-                            donHang.setTrang_thai(TrangThai.CHUA_XAC_NHAN.getTrangThai());
-                            donHang.setThoiGianDatHang(OverUtils.getSimpleDateFormat().format(new Date(System.currentTimeMillis())));
-                            donHang.setThoiGianGiaoHangDuKien(System.currentTimeMillis() +
-                                    TimeUnit.MINUTES.toMillis(productDaChon.getThoiGianCheBien()) +
-                                    TimeUnit.MINUTES.toMillis(30));
-                            donHang.setTong_tien(soTienThanhToan + soTienVanChuyen);
-                            String key = FirebaseDatabase.getInstance().getReference().child("don_hang").push().getKey();
-                            donHang.setId(key);
-                            OrderDao.getInstance().insertDonHang(donHang, new IAfterInsertObject() {
-                                @Override
-                                public void onSuccess(Object obj) {
-                                    OverUtils.makeToast(ThanhToanNgayActivity.this,"Đặt hàng thành công");
-                                    Intent intent = new Intent(ThanhToanNgayActivity.this,HomeActivity.class);
-                                    intent.setAction(OverUtils.GO_TO_ORDER_FRAGMENT);
-                                    startActivity(intent);
-                                    finish();
-                                }
-
-                                @Override
-                                public void onError(DatabaseError exception) {
-                                    OverUtils.makeToast(ThanhToanNgayActivity.this,ERROR_MESSAGE);
-                                }
-                            });
-                        }else {
-                            OverUtils.makeToast(ThanhToanNgayActivity.this,"Tài khoản của bạn đã bị khóa");
-                        }
-                    }
-
-                    @Override
-                    public void onError(DatabaseError error) {
-
-                    }
-                });
+        tvDangHang.setOnClickListener(v -> {
+            if (userLogin.getName() == null || userLogin.getAddress() == null){
+                OverUtils.makeToast(ThanhToanNgayActivity.this,"Cần thêm địa chỉ");
+                return;
             }
+            UserDao.getInstance().getUserByUserName(userLogin.getUsername(), new IAfterGetAllObject() {
+                @Override
+                public void iAfterGetAllObject(Object obj) {
+                    User user = (User) obj;
+                    if (user.getUsername() != null && user.isEnable()){
+                        DonHang donHang = new DonHang();
+                        donHang.setUser_id(user.getUsername());
+                        donHang.setDia_chi(user.getAddress());
+                        donHang.setHo_ten(user.getName());
+                        donHang.setDon_hang_chi_tiets(donHangChiTietList);
+                        if (ghiChu != null){
+                            donHang.setGhi_chu(ghiChu);
+                        }
+                        donHang.setSdt(user.getPhone_number());
+                        donHang.setTrang_thai(TrangThai.CHUA_XAC_NHAN.getTrangThai());
+                        donHang.setThoiGianDatHang(OverUtils.getSimpleDateFormat().format(new Date(System.currentTimeMillis())));
+                        donHang.setThoiGianGiaoHangDuKien(System.currentTimeMillis() +
+                                TimeUnit.MINUTES.toMillis(productDaChon.getThoiGianCheBien()) +
+                                TimeUnit.MINUTES.toMillis(30));
+                        donHang.setTong_tien(soTienThanhToan + soTienVanChuyen);
+                        String key = FirebaseDatabase.getInstance().getReference().child("don_hang").push().getKey();
+                        donHang.setId(key);
+                        OrderDao.getInstance().insertDonHang(donHang, new IAfterInsertObject() {
+                            @Override
+                            public void onSuccess(Object obj) {
+                                OverUtils.makeToast(ThanhToanNgayActivity.this,"Đặt hàng thành công");
+                                Intent intent = new Intent(ThanhToanNgayActivity.this,HomeActivity.class);
+                                intent.setAction(OverUtils.GO_TO_ORDER_FRAGMENT);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(DatabaseError exception) {
+                                OverUtils.makeToast(ThanhToanNgayActivity.this,ERROR_MESSAGE);
+                            }
+                        });
+                    }else {
+                        OverUtils.makeToast(ThanhToanNgayActivity.this,"Tài khoản của bạn đã bị khóa");
+                    }
+                }
+
+                @Override
+                public void onError(DatabaseError error) {
+
+                }
+            });
         });
     }
 
@@ -204,6 +201,8 @@ public class ThanhToanNgayActivity extends AppCompatActivity {
                 if (userLogin.getAddress() != null) {
                     edtDiaChi.setText(userLogin.getAddress());
                 }
+
+                btnHuy.setOnClickListener(v1 -> bottomSheetDialog.cancel());
 
                 btnThemDiaChi.setOnClickListener(v12 -> {
                     String hoTen = edtHoTen.getText().toString().trim();
@@ -312,6 +311,7 @@ public class ThanhToanNgayActivity extends AppCompatActivity {
         tvTien.setText(OverUtils.currencyFormat.format(giaCuaSanPham));
         int soTienVanChuyen = 0;
         tvTongTien.setText(OverUtils.currencyFormat.format(giaCuaSanPham + soTienVanChuyen));
+
         soTienThanhToan = giaCuaSanPham;
         ThanhToanNgayActivity.soTienVanChuyen = soTienVanChuyen;
 

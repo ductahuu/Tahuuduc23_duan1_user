@@ -1,9 +1,10 @@
 package com.example.tahuuduc23_duan1_user.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Product {
+public class Product implements Serializable {
     private String id;
     private String name;
     private String image;

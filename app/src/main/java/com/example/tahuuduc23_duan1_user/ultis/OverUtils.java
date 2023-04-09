@@ -108,10 +108,10 @@ public class OverUtils {
     }
 
     //hien thi san pham pho bien
-    public static List<Product> filterProduct3(List<Product> products) {
+    public static List<Product> filterProduct3(List<Product> resultList) {
         List<Product> result = new ArrayList<>();
-        for(Product product : products) {
-            if(product.getTrang_thai().equals(HOAT_DONG) || product.getTrang_thai().equals(SAP_RA_MAT)) {
+        for(Product product : resultList) {
+            if(product.getSo_luong_da_ban() > 0) {
                 result.add(product);
             }
         }

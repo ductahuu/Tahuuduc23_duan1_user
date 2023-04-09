@@ -20,7 +20,7 @@ public class RecyclerViewItemTouchHelper extends ItemTouchHelper.SimpleCallback 
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        return false;
+        return true;
     }
 
     @Override
@@ -46,7 +46,6 @@ public class RecyclerViewItemTouchHelper extends ItemTouchHelper.SimpleCallback 
 
     @Override
     public void onChildDrawOver(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         View foreGroundView = ((FavoriteProductAdapter.ViewHolder)viewHolder).viewHolderProduct;
         getDefaultUIUtil().onDrawOver(c,recyclerView,foreGroundView,dX,dY,actionState,isCurrentlyActive);
     }

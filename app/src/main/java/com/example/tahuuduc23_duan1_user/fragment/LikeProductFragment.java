@@ -55,6 +55,11 @@ public class LikeProductFragment extends Fragment implements ItemTouchHelpListen
         setUpListSPYeuThich();
     }
 
+    private void initView(View view) {
+        rcvSanPhamYeuThich = view.findViewById(R.id.rcvSanPhamYeuThich);
+        viewRoot = view.findViewById(R.id.viewRoot);
+    }
+
     private void setUpListSPYeuThich() {
         productList = new ArrayList<>();
         favoriteProductAdapter = new FavoriteProductAdapter(getContext(),productList);
@@ -62,7 +67,8 @@ public class LikeProductFragment extends Fragment implements ItemTouchHelpListen
         rcvSanPhamYeuThich.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         rcvSanPhamYeuThich.setAdapter(favoriteProductAdapter);
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerViewItemTouchHelper(0,ItemTouchHelper.LEFT,this);
+        ItemTouchHelper.SimpleCallback simpleCallback =
+                new RecyclerViewItemTouchHelper(0,ItemTouchHelper.LEFT,this);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(rcvSanPhamYeuThich);
 
         UserDao.getInstance().getSanPhamYeuThichOfUser(userLogin, new IAfterGetAllObject() {
@@ -74,6 +80,7 @@ public class LikeProductFragment extends Fragment implements ItemTouchHelpListen
                 productList.clear();
                 for (String maSP : maSanPhamYeuThichList){
                     ProductDao.getInstance().getProductById(maSP, new IAfterGetAllObject() {
+                        @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void iAfterGetAllObject(Object obj) {
                             if (obj != null){
@@ -107,11 +114,6 @@ public class LikeProductFragment extends Fragment implements ItemTouchHelpListen
                 OverUtils.makeToast(getContext(), ERROR_MESSAGE);
             }
         });
-    }
-
-    private void initView(View view) {
-        rcvSanPhamYeuThich = view.findViewById(R.id.rcvSanPhamYeuThich);
-        viewRoot = view.findViewById(R.id.viewRoot);
     }
 
     @Override

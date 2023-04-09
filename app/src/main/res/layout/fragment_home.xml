@@ -25,7 +25,7 @@
                 android:text="Hi Đức"
                 android:textColor="@color/orange"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -51,14 +51,14 @@
                 android:hint="Tìm kiếm sản phẩm"
                 android:paddingLeft="20dp"
                 android:textSize="14sp"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginLeft="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="32dp"
                 android:background="@drawable/light_orange_bg">
 
@@ -121,7 +121,7 @@
                     app:layout_constraintHorizontal_bias="0.405"
                     app:layout_constraintStart_toEndOf="@+id/imageView4"
                     app:layout_constraintTop_toBottomOf="@+id/textView5"
-                    app:layout_constraintVertical_bias="1.0"/>
+                    app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -134,7 +134,7 @@
                 android:text="Loại đồ ăn"
                 android:textColor="#000"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewCategoryList"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -153,7 +153,7 @@
                 android:text="Phổ biến"
                 android:textColor="#000"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imgBannerPopular"
@@ -162,15 +162,14 @@
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/banner_popular"/>
+                android:src="@drawable/banner_popular" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPopular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="8dp"/>
-
+                android:layout_marginTop="8dp" />
 
 
             <TextView
@@ -182,7 +181,7 @@
                 android:text="Khuyến Mãi"
                 android:textColor="#000"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imgSanPhamKhuyenMais"
@@ -198,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
 
             <TextView
@@ -210,7 +209,7 @@
                 android:text="Sản phẩm mới"
                 android:textColor="#000"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imgMoiNhat"
@@ -226,7 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
         </LinearLayout>
     </ScrollView>

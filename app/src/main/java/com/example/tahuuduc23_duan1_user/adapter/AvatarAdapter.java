@@ -1,9 +1,12 @@
 package com.example.tahuuduc23_duan1_user.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tahuuduc23_duan1_user.R;
 import com.example.tahuuduc23_duan1_user.interface_.ClickAvatar;
 import com.example.tahuuduc23_duan1_user.model.Avatar;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.AvatarViewHolder> {
 
@@ -36,9 +42,24 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.AvatarView
         return new AvatarViewHolder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull AvatarViewHolder holder, int position) {
-
+        Avatar avatar = list.get(position);
+        if (avatar.getImage().equals("null")) {
+            holder.imageAvatar.setImageResource(R.drawable.ic_image);
+            holder.nameAvatar.setText(avatar.getTitle());
+            holder.itemView.setOnClickListener(v -> {
+                clickAvatar.onClickAvatar(avatar);
+            });
+        } else {
+            Picasso.get()
+                    .load(avatar.getImage())
+                    .placeholder(R.drawable.ic_image)
+                    .into(holder.imageAvatar);
+            holder.nameAvatar.setText(avatar.getTitle());
+            holder.itemView.setOnClickListener(v -> clickAvatar.onClickAvatar(avatar));
+        }
     }
 
     @Override
@@ -48,8 +69,14 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.AvatarView
 
     public class AvatarViewHolder extends RecyclerView.ViewHolder{
 
+        CircleImageView imageAvatar;
+        TextView nameAvatar;
+        LinearLayout layout;
         public AvatarViewHolder(@NonNull View itemView) {
             super(itemView);
+            imageAvatar = itemView.findViewById(R.id.img_avatar_selected);
+            nameAvatar = itemView.findViewById(R.id.tv_nameAvatar);
+            layout = itemView.findViewById(R.id.click_avatar);
         }
     }
 }

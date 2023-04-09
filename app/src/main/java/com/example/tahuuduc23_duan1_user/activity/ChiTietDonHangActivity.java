@@ -79,6 +79,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
 
                 chiTietDonHangAdapter = new ChiTietDonHangAdapter(ChiTietDonHangActivity.this,donHang.getDon_hang_chi_tiets());
                 rcvChiTietDonHang.setAdapter(chiTietDonHangAdapter);
+
                 if (!donHang.getTrang_thai().equals(TrangThai.CHUA_XAC_NHAN.getTrangThai())){
                     tvHuyDon.setVisibility(View.GONE);
                 }

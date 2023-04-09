@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void listenLockAccount() {
-        UserDao.getInstance().getUserByUserName(userLogin.getUsername(), new IAfterGetAllObject() {
+        UserDao.getInstance().getUserByUserNameListener(userLogin.getUsername(), new IAfterGetAllObject() {
             @Override
             public void iAfterGetAllObject(Object obj) {
                 if (obj != null){
@@ -151,6 +151,5 @@ public class HomeActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerViewHome,new HomeFragment()).commit();
             bottomNavigationView.setSelectedItemId(R.id.nav_home);
         }
-        super.onBackPressed();
     }
 }

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tahuuduc23_duan1_user.R;
 import com.example.tahuuduc23_duan1_user.activity.ChiTietDonHangActivity;
 import com.example.tahuuduc23_duan1_user.model.DonHang;
+import com.example.tahuuduc23_duan1_user.model.DonHangChiTiet;
+import com.example.tahuuduc23_duan1_user.model.Shipper;
 import com.example.tahuuduc23_duan1_user.model.TrangThai;
 import com.example.tahuuduc23_duan1_user.ultis.OverUtils;
 
@@ -69,6 +71,22 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.DonHangV
                 context.startActivity(intent);
             }
         });
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0;i < donHang.getDon_hang_chi_tiets().size();i++){
+            DonHangChiTiet donHangChiTiet = donHang.getDon_hang_chi_tiets().get(i);
+            stringBuilder.append(donHangChiTiet.getProduct().getName()).append(" (").append(donHangChiTiet.getSo_luong()).append(")").append("\n");
+        }
+        holder.tvTenSanPhams.setText(stringBuilder.toString());
+
+        Shipper shipper = donHang.getShipper();
+        if (shipper != null){
+            holder.tvShipper.setText(shipper.getName() + " - " + shipper.getPhone_number());
+            holder.tvShipper.setVisibility(View.VISIBLE);
+            holder.tvTitleShipper.setVisibility(View.VISIBLE);
+        }else {
+            holder.tvShipper.setVisibility(View.GONE);
+            holder.tvTitleShipper.setVisibility(View.GONE);
+        }
     }
 
     @Override

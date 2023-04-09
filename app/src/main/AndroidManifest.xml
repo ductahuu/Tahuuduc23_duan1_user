@@ -32,6 +32,16 @@
             android:exported="false"/>
         <activity android:name=".activity.ThanhToanNgayActivity"
             android:exported="false"/>
+        <activity android:name=".activity.CartActivity"
+            android:exported="false" />
+        <activity android:name=".activity.OrderActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.AvatarActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.ChiTietDonHangActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.ThanhToanActivity"
+            android:exported="false"/>
 
     </application>
 

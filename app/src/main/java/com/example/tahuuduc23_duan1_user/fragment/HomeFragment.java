@@ -23,12 +23,16 @@ import com.example.tahuuduc23_duan1_user.activity.SearchActivity;
 import com.example.tahuuduc23_duan1_user.activity.ShowProductActivity;
 import com.example.tahuuduc23_duan1_user.adapter.CategoryAdapter;
 import com.example.tahuuduc23_duan1_user.adapter.HorizontalProductAdapter;
+import com.example.tahuuduc23_duan1_user.dao.GioHangDao;
 import com.example.tahuuduc23_duan1_user.dao.ProductDao;
 import com.example.tahuuduc23_duan1_user.dao.ProductTypeDao;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterGetAllObject;
+import com.example.tahuuduc23_duan1_user.interface_.IAfterInsertObject;
 import com.example.tahuuduc23_duan1_user.interface_.OnAddToCard;
 import com.example.tahuuduc23_duan1_user.interface_.OnClickItem;
 import com.example.tahuuduc23_duan1_user.interface_.UpdateRecyclerView;
+import com.example.tahuuduc23_duan1_user.local_database.LocalUserDatabase;
+import com.example.tahuuduc23_duan1_user.model.GioHang;
 import com.example.tahuuduc23_duan1_user.model.LoaiSP;
 import com.example.tahuuduc23_duan1_user.model.Product;
 import com.example.tahuuduc23_duan1_user.ultis.OverUtils;
@@ -38,6 +42,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements UpdateRecyclerView, OnClickItem, OnAddToCard {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
     private RecyclerView recyclerViewCategoryList;
 
     private CategoryAdapter categoryAdapter;
@@ -155,10 +163,9 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView, OnClic
 
             @Override
             public void onError(DatabaseError error) {
-                OverUtils.makeToast(getContext(), ERROR_MESSAGE);
+
             }
         });
-        categoryAdapter.setData(loaiSPList);
     }
 
 
@@ -193,7 +200,55 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView, OnClic
 
     @Override
     public void onAddToCard(Product product) {
+        GioHang gioHang = new GioHang(product.getId(), 1);
+        List<GioHang> gioHangList = userLogin.getGio_hang();
+        if (gioHangList == null) {
+            gioHangList = new ArrayList<>();
+            gioHangList.add(gioHang);
+            postGioHang(gioHangList);
+        } else {
+            boolean tonTaiGioHangCuaSP = false;
+            for (GioHang dhct : gioHangList) {
+                if (dhct.getMa_sp().equals(gioHang.getMa_sp())) {
+                    tonTaiGioHangCuaSP = true;
+                }
+            }
+            if (tonTaiGioHangCuaSP) {
+                for (GioHang dhct : gioHangList) {
+                    if (dhct.getMa_sp().equals(gioHang.getMa_sp())) {
+                        int soLuong = dhct.getSo_luong() + gioHang.getSo_luong();
+                        if (soLuong > 50) {
+                            OverUtils.makeToast(getContext(), "Số lượng hàng của 1 sản phẩm phẩm không quá 50 sp");
+                        } else {
+                            dhct.setSo_luong(soLuong);
+                        }
 
+                    }
+                }
+                postGioHang(gioHangList);
+            } else {
+                gioHangList.add(gioHang);
+                postGioHang(gioHangList);
+            }
+        }
+    }
+
+    private void postGioHang(List<GioHang> gioHangList) {
+        userLogin.setGio_hang(gioHangList);
+        GioHangDao.getInstance().insertGioHang(userLogin,
+                userLogin.getGio_hang(),
+                new IAfterInsertObject() {
+                    @Override
+                    public void onSuccess(Object obj) {
+                        LocalUserDatabase.getInstance(getContext()).getUserDao().update(userLogin);
+                        OverUtils.makeToast(getContext(),"Thêm thành công");
+                    }
+
+                    @Override
+                    public void onError(DatabaseError exception) {
+                        OverUtils.makeToast(getContext(), ERROR_MESSAGE);
+                    }
+                });
     }
 
     @Override
@@ -215,4 +270,6 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView, OnClic
         intent.putExtra("categoryId",categoryId);
         startActivity(intent);
     }
+
+
 }
