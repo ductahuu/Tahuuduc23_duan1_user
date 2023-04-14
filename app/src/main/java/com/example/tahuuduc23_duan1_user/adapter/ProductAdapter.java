@@ -23,10 +23,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
-
     Context context;
     List<Product> productList;
-
     public ProductAdapter(Context context, List<Product> list) {
         this.context = context;
         this.productList = list;
@@ -37,6 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.productList = productList;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,8 +60,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
         holder.tvPriceProduct.setText(currencyFormat.format((int) (product.getGia_ban() - product.getGia_ban() * product.getKhuyen_mai())) + " VNĐ");
 
-
-        holder.tvPriceProduct.setOnClickListener(new View.OnClickListener() {
+        holder.viewHolderProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowProductActivity.class);

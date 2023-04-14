@@ -97,11 +97,7 @@ public class ProductActivity extends AppCompatActivity implements UpdateRecycler
     public void btnReturn(View view){
         onBackPressed();
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
+
 
     private void anhXa() {
         recyclerViewCategoryProduct = findViewById(R.id.recyclerViewCategoryProduct);
@@ -123,5 +119,10 @@ public class ProductActivity extends AppCompatActivity implements UpdateRecycler
                 OverUtils.makeToast(ProductActivity.this, ERROR_MESSAGE);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

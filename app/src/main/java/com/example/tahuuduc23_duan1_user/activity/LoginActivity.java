@@ -26,10 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ImageView fb,google,twitter;
 
-    //dung trong SignUpFragment
-    public TabLayout getTabLayout(){
-        return tabLayout;
-    }
+
 
     //change activity sang call phone activity
     private final ActivityResultLauncher<String> requestPermissionLaucher =
@@ -40,11 +37,14 @@ public class LoginActivity extends AppCompatActivity {
                     OverUtils.makeToast(LoginActivity.this,"Không có quyền gọi điện");
                 }
             });
-
+    //dung trong SignUpFragment
+    public TabLayout getTabLayout(){
+        return tabLayout;
+    }
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();

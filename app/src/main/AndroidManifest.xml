@@ -3,22 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tahuuduc23_duan1_user">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tahuuduc23_duan1_user"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.FlashActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity android:name=".activity.LoginActivity"
             android:exported="false"/>
@@ -42,6 +39,15 @@
             android:exported="false"/>
         <activity android:name=".activity.ThanhToanActivity"
             android:exported="false"/>
+
+        <activity android:name=".activity.FlashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 

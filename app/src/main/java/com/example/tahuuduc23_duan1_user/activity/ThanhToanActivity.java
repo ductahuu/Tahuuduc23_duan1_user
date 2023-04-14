@@ -188,52 +188,55 @@ public class ThanhToanActivity extends AppCompatActivity {
                     OverUtils.makeToast(ThanhToanActivity.this,"Cần thêm địa chỉ");
                     return;
                 }
-            }
-            UserDao.getInstance().getUserByUserName(userLogin.getUsername(), new IAfterGetAllObject() {
-                @Override
-                public void iAfterGetAllObject(Object obj) {
-                    User user = (User) obj;
-                    if (user.getUsername() != null || user.isEnable()){
-                        if (!donHangChiTietList.isEmpty()){
-                            DonHang donHang = new DonHang();
-                            donHang.setUser_id(user.getUsername());
-                            donHang.setDia_chi(user.getAddress());
-                            donHang.setHo_ten(user.getName());
-                            donHang.setDon_hang_chi_tiets(donHangChiTietList);
-                            if (ghiChu != null){
-                                donHang.setGhi_chu(ghiChu);
-                            }
-                            donHang.setSdt(user.getPhone_number());
-                            donHang.setTrang_thai(TrangThai.CHUA_XAC_NHAN.getTrangThai());
-                            donHang.setThoiGianDatHang(OverUtils.getSimpleDateFormat().format(new Date(System.currentTimeMillis())));
-                            String key = FirebaseDatabase.getInstance().getReference().child("don_hang").push().getKey();
-                            donHang.setId(key);
-                            OrderDao.getInstance().insertDonHang(donHang, new IAfterInsertObject() {
-                                @Override
-                                public void onSuccess(Object obj) {
-                                    xoaGioHang();
+                UserDao.getInstance().getUserByUserName(userLogin.getUsername(), new IAfterGetAllObject() {
+                    @Override
+                    public void iAfterGetAllObject(Object obj) {
+                        User user = (User) obj;
+                        if (user.getUsername() != null || user.isEnable()){
+                            if (!donHangChiTietList.isEmpty()){
+                                DonHang donHang = new DonHang();
+                                donHang.setUser_id(user.getUsername());
+                                donHang.setDia_chi(user.getAddress());
+                                donHang.setHo_ten(user.getName());
+                                donHang.setDon_hang_chi_tiets(donHangChiTietList);
+                                if (ghiChu != null){
+                                    donHang.setGhi_chu(ghiChu);
                                 }
+                                donHang.setSdt(user.getPhone_number());
+                                donHang.setTrang_thai(TrangThai.CHUA_XAC_NHAN.getTrangThai());
+                                donHang.setThoiGianDatHang(OverUtils.getSimpleDateFormat().format(new Date(System.currentTimeMillis())));
+                                donHang.setThoiGianGiaoHangDuKien(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(thoiGianGiaoHang) + TimeUnit.MINUTES.toMillis(30));
+                                donHang.setTong_tien(soTienThanhToan + soTienVanChuyen);
+                                String key = FirebaseDatabase.getInstance().getReference().child("don_hang").push().getKey();
+                                donHang.setId(key);
+                                OrderDao.getInstance().insertDonHang(donHang, new IAfterInsertObject() {
+                                    @Override
+                                    public void onSuccess(Object obj) {
+                                        xoaGioHang();
+                                    }
 
-                                @Override
-                                public void onError(DatabaseError exception) {
-                                    OverUtils.makeToast(ThanhToanActivity.this, ERROR_MESSAGE);
-                                }
-                            });
+                                    @Override
+                                    public void onError(DatabaseError exception) {
+                                        OverUtils.makeToast(ThanhToanActivity.this, ERROR_MESSAGE);
+                                    }
+                                });
+                            }else {
+                                OverUtils.makeToast(ThanhToanActivity.this, "Quý khách vui lòng chọn sản phẩm");
+                            }
                         }else {
-                            OverUtils.makeToast(ThanhToanActivity.this, "Quý khách vui lòng chọn sản phẩm");
-                        }
-                    }else {
-                        if (user.getUsername() != null){
-                            OverUtils.makeToast(ThanhToanActivity.this,"Tài khoản của bạn đã bị khóa");
+                            if (user.getUsername() != null){
+                                OverUtils.makeToast(ThanhToanActivity.this,"Tài khoản của bạn đã bị khóa");
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onError(DatabaseError error) {
+                    @Override
+                    public void onError(DatabaseError error) {
 
-                }
-            });
+                    }
+                });
+            }
+
         });
     }
 
