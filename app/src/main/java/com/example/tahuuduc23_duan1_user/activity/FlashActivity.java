@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.tahuuduc23_duan1_user.R;
-import com.example.tahuuduc23_duan1_user.R;
 import com.example.tahuuduc23_duan1_user.dao.UserDao;
 import com.example.tahuuduc23_duan1_user.interface_.IAfterGetAllObject;
 import com.example.tahuuduc23_duan1_user.model.User;
@@ -66,24 +65,26 @@ public class FlashActivity extends AppCompatActivity {
         UserDao.getInstance().getUserByUserName(OverUtils.getUserLogin(FlashActivity.this).getUsername(), new IAfterGetAllObject() {
             @Override
             public void iAfterGetAllObject(Object obj) {
-                if (obj != null){
+                if(obj != null) {
                     userLogin = (User) obj;
-                    // cài đặt delay vào màn hình login
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            startActivity(intent);
-                            finish();
-                        }
-                    },500);
+                    startActivity(intent);
+                    finish();
+//                    timer.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    }, 500);
                 }
             }
 
             @Override
             public void onError(DatabaseError error) {
-                OverUtils.makeToast(FlashActivity.this,ERROR_MESSAGE);
+                OverUtils.makeToast(FlashActivity.this, ERROR_MESSAGE);
             }
         });
+
     }
 
     //onClick MainActivity

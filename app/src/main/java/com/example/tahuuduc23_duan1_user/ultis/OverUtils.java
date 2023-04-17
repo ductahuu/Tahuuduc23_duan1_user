@@ -6,15 +6,23 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
-
-import com.example.tahuuduc23_duan1_user.activity.FlashActivity;
+import androidx.annotation.RequiresApi;
 import com.example.tahuuduc23_duan1_user.local_database.LocalUserDatabase;
 import com.example.tahuuduc23_duan1_user.model.Product;
 import com.example.tahuuduc23_duan1_user.model.User;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,17 +42,14 @@ public class OverUtils {
     public static final String PASS_FILE = "PASS_FILE";
     public static final String ACCOUNT_FILE = "ACCOUNT_FILE";
 
-    //state Login
     public static final String PASS_LOGIN_ACTIVITY = "PASS_LOGIN";
     public static final String NO_PASS = "NO_PASS";
     public static final String PASS_FLASH_ACTIVITY = "PASS_FLASH_ACTIVITY";
-
 
     public final static int TYPE_PHO_BIEN_ADAPTER = 0;
     public final static int TYPE_KHUYEN_MAI_ADAPTER = 1;
     public final static int TYPE_SP_MOI_ADAPTER = 2;
 
-    //phan sau
     public final static String GO_TO_ORDER_FROFILE_FRAGMENT="GO TO FROFILE FRAMENT";
     public final static String GO_TO_ORDER_FRAGMENT = "GO TO ORDER FRAGMENT";
 
@@ -79,13 +84,6 @@ public class OverUtils {
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    //dung cho FlashActivity
-    public static User getUserLogin(Context context) {
-        List<User> userList = LocalUserDatabase.getInstance(context).getUserDao().getAll();
-        return userList.get(0);
-    }
-
-    //san pham khuyen mai
     public static List<Product> filterProduct(List<Product> products) {
         List<Product> result = new ArrayList<>();
         for(Product product : products) {
@@ -96,7 +94,6 @@ public class OverUtils {
         return result;
     }
 
-    //hien thi san pham moi
     public static List<Product> filterProduct2(List<Product> products) {
         List<Product> result = new ArrayList<>();
         for(Product product : products) {
@@ -107,7 +104,6 @@ public class OverUtils {
         return result;
     }
 
-    //hien thi san pham pho bien
     public static List<Product> filterProduct3(List<Product> resultList) {
         List<Product> result = new ArrayList<>();
         for(Product product : resultList) {
@@ -116,5 +112,10 @@ public class OverUtils {
             }
         }
         return result;
+    }
+
+    public static User getUserLogin(Context context) {
+        List<User> userList = LocalUserDatabase.getInstance(context).getUserDao().getAll();
+        return userList.get(0);
     }
 }
